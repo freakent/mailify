@@ -1,0 +1,16 @@
+{
+  "name": "mailify",
+  "version": "1.0.0",
+  "description": "Converts a html into something that is easy to email",
+  "main": "index.js",
+  "scripts": {
+    "start": "NODE_DEBUG='mailify' node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "cheerio": "^0.19.0",
+    "debug": "^2.2.0"
+  }
+}
