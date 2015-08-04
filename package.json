@@ -1,16 +1,24 @@
 {
   "name": "mailify",
-  "version": "1.0.0",
+  "version": "0.1.1",
   "description": "Converts a html into something that is easy to email",
   "main": "index.js",
   "scripts": {
     "start": "NODE_DEBUG='mailify' node index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "repository" : {
+      "type" : "git",
+      "url" : "https://github.com/freakent/mailify.git"
+  },
   "author": "",
   "license": "ISC",
+  "preferGlobal": true,
   "dependencies": {
     "cheerio": "^0.19.0",
     "debug": "^2.2.0"
+  },
+  "bin": {
+      "mailify": "index.js"
   }
 }
