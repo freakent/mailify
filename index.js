@@ -15,7 +15,6 @@ if (process.argv.length < 3) {
 var filename = process.argv[2]
 var props = path.parse(filename)
 
-if (props.ext == '.html' || props.ext == '.htm') {
     fs.readFile(filename, 'utf-8', function(err, contents) {
         processFile(filename, contents, function(err, new_contents) {
             if (contents != new_contents) {
@@ -28,9 +27,6 @@ if (props.ext == '.html' || props.ext == '.htm') {
             }
         })
     })
-} else {
-    console.log("%s is not a html file", filename)
-}
 
 /* fs.readdir(file_path, function(err, files) {
     files.filter(function(file) { return file.substr(-5) === '.html'; })
@@ -52,21 +48,23 @@ function processFile(filename, contents, next) {
     $('img').each(function(i, tag) {
         //debug(tag.attribs.src)
         var old_src = tag.attribs.src
-        var new_src
+        var new_src = path.join(path.dirname(filename), old_src)
 
         if (path.extname(old_src) == "") {
 
             debug("Fixing file extention on %s", old_src)
-            new_src = old_src + ".jpg"
-            $(this).attr('src', new_src)
-            debug("from: %s to %s", old_src, path.join(path.dirname(filename), new_src))
-            cp(path.join(path.dirname(filename), old_src), path.join(path.dirname(filename), new_src), function(err) {
+            new_src = new_src + ".jpg"
+            debug("from: %s to %s", old_src, new_src)
+            cp(path.join(path.dirname(filename), old_src), new_src, function(err) {
                 if (err) {
                     console.log("error in copy %s", err)
+                    proces.exit(1)
                 }
             })
             debug("File fixed")
         }
+
+        $(this).attr('src', path.resolve(new_src))
 
     })
 
