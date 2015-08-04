@@ -2,7 +2,10 @@
 Formats a downloaded HTML page for emailing
 
 ##Installation
+You will need a recent version of node.js installed (tested on v0.12.7)
+```
 npm install -g https://github.com/freakent/mailify.git
+```
 
 ##What does it do?
 mailify fixes problems in html pages that mess up formatting of rich html messages in Mozilla Thunderbird
