@@ -5,6 +5,7 @@ var util = require('util')
 var debug = util.debuglog('mailify')
 var path = require('path')
 var cheerio = require('cheerio')
+var file_url = require('file-url')
 
 
 if (process.argv.length < 3) {
@@ -64,7 +65,7 @@ function processFile(filename, contents, next) {
             debug("File fixed")
         }
 
-        $(this).attr('src', path.resolve(new_src))
+        $(this).attr('src', file_url(path.resolve(new_src)))
 
     })
 
