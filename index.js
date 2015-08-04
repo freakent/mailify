@@ -6,6 +6,7 @@ var debug = util.debuglog('mailify')
 var path = require('path')
 var cheerio = require('cheerio')
 var file_url = require('file-url')
+var size_of = require('image-size')
 
 
 if (process.argv.length < 3) {
@@ -49,23 +50,36 @@ function processFile(filename, contents, next) {
     $('img').each(function(i, tag) {
         //debug(tag.attribs.src)
         var old_src = tag.attribs.src
+
         var new_src = path.join(path.dirname(filename), old_src)
+        var dimensions = size_of(unescape(new_src))
 
         if (path.extname(old_src) == "") {
 
             debug("Fixing file extention on %s", old_src)
-            new_src = new_src + ".jpg"
-            debug("from: %s to %s", old_src, new_src)
+            new_src = new_src + "." + dimensions.type
+            //debug("from: %s to %s", old_src, new_src)
             cp(path.join(path.dirname(filename), old_src), new_src, function(err) {
                 if (err) {
                     console.log("error in copy %s", err)
                     proces.exit(1)
                 }
             })
-            debug("File fixed")
+            //debug("File fixed")
         }
 
-        $(this).attr('src', file_url(path.resolve(new_src)))
+        if (old_src.search(/^file:.*/) == -1) {
+            $(this).attr('src', file_url(path.resolve(new_src)))
+        }
+
+        var width = $(this).attr('width')
+        var height = $(this).attr('height')
+        if (width && !height) {
+            debug("Setting height of of %s, %s, %j", new_src, width, dimensions)
+            var ratio = parseInt(width) / dimensions.width
+            debug("ACR: %s", ratio)
+            $(this).attr('height', [(dimensions.height * ratio).toFixed(0), "px"].join(""))
+        }
 
     })
 
