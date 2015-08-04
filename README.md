@@ -4,6 +4,14 @@ Formats a downloaded HTML page for emailing
 ##Installation
 npm install -g https://github.com/freakent/mailify.git
 
+##What does it do?
+mailify fixes problems in html pages that mess up formatting of rich html messages in Mozilla Thunderbird
+
+1. Removes moz-do-not-send="true" attributes
+1. Adds file extensions to image files that don't have them
+1. Changes all image URLs to be fully qualified instead of relative
+1. Calcuates image height attributes when not specified based on ratio of width 
+
 ##Getting started
 1. View the page you want to email in your browser
 1. Right-click, choose Save as...
@@ -16,6 +24,6 @@ npm install -g https://github.com/freakent/mailify.git
 1. Type Ctrl-V to paste the formatted message text into the body of the message
 1. Press Send
 
-##Issues
+##Known Issues
 1. If you try to re-run mailify against a filename that has already been processed it 
 will give an error. Just copy your .sav file over the .html file to re-run.
